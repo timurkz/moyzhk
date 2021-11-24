@@ -1,0 +1,46 @@
+{% extends "audan/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <legend class="mt-1 mb-3 border-bottom">
+        <small class="text-muted">Объявления в ЖК {{building.name}}</small>
+    </legend>
+
+    <div class="posts">
+        {% for post in posts %}  
+            <article class="content-section">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <a class="post" href="{% url 'post-detail' post.id %}">
+                            <img class="post-img" src="{{ post.image.url }}">
+                        </a>
+                        <a class="post" href="{% url 'post-detail' post.id %}">
+                            <div class="d-flex flex-column">
+                                <div class="post-content">
+                                    <h1 class="post-title"  href="{% url 'post-detail' post.id %}">{{ post.title }}</h1>
+                                    <span class="post-body">{{ post.body }}</span>
+                                    {% if post.price %}
+                                        <span class="price-bottom">{{ post.price }} т.г.</span>
+                                    {% endif %}
+                                </div>
+                                <div class="justify-content-end">
+                                    <small class="post-author text-muted me-2">{{post.date_created|date:"d F"}}</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="justify-content-end">
+                        {% if post.price %}
+                            <span class="price-right">{{ post.price }} т.г.</span>
+                        {% endif %}
+                    </div>
+                </div>
+                </a>
+            </article>
+        {% endfor %}    
+    </div>
+</div>
+
+
+{% endblock %}

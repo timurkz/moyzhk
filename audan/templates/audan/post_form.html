@@ -1,0 +1,17 @@
+{% extends "audan/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<div class="container mt-5  col-sm-7">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4 display-6">Объявление</legend>
+            {{ form|crispy}}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-dark" type="submit">Подать Объявление</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

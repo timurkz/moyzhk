@@ -1,0 +1,65 @@
+{% extends "audan/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<form>
+    {% csrf_token %}
+    <div class="container" >
+        
+        <div style="max-width: 900px" class="d-flex justify-content-between mt-1 mb-3 border-bottom">
+            <legend>
+                <small class="text-muted">Ваши объявления<small>
+            </legend>
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-outline-secondary btn-sm me-2" href="{% url 'profile-update' %}">Настройки</a>
+                <a class="btn btn-outline-secondary btn-sm" href="{% url 'logout' %}">Выйти</a>
+            </div>
+        </div>
+        <div class="posts">
+        {% for post in posts %}  
+    
+        <span class="ms-2 text-muted">ЖК {{post.zhk.name}}<span>
+            <article class="content-section">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <a class="post" href="{% url 'profile-post-detail' post.id %}">
+                            <img class="post-img" src="{{ post.image.url }}">
+                        </a>    
+                        <a class="post" href="{% url 'profile-post-detail' post.id %}">
+                            <div class="d-flex flex-column">
+                                <div class="post-content">
+                                    <h1 class="post-title">{{ post.title }}</h2>
+                                    <span class="post-body">{{ post.body }}</span>
+                                    {% if post.price %}
+                                        <span class="price-bottom">{{ post.price }} т.г.</span>
+                                    {% endif %}
+                                </div>
+                                <div class="justify-content-end">
+                                    <span class="post-author text-muted me-2">{{post.date_created|date:"d F"}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="justify-content-end">
+                        {% if post.price %}
+                            <span class="price-right">{{ post.price }} т.г.</span>
+                        {% endif %}
+                        <div style="float:bottom">
+                            {% if post.author == user %}
+                            <div>
+                                <a class="btn btn-secondary btn-sm mt-1 post-settings" href="{% url 'post-update' post.id %}">Изменить</a>
+                            </div>
+                                <a class="btn btn-danger btn-sm mt-1 post-settings" href="{% url 'post-delete' post.id %}">Удалить </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </article>
+        {% endfor %} 
+        </div>
+
+        </div>
+
+    </div>
+</form>
+{% endblock %}

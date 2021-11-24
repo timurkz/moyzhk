@@ -1,0 +1,50 @@
+{% extends "audan/layout.html" %}
+
+{% block body %}
+
+<div class="container" >
+    <div style="max-width: 900px" class="d-flex justify-content-between mt-1 mb-3 border-bottom">
+        <legend>
+            <small class="text-muted">{{post.zhk.name}}<small>
+        </legend>
+    </div>
+
+    <div class="posts">
+        <article class="content-section">
+            <div class="d-flex justify-content-between">
+                <div class="post d-flex">
+                    <img class="post-img" src="{{ post.image.url }}">
+                    <div class="d-flex flex-column">
+                        <div class="post-content" style="height: 70px;">
+                            <h2 class="post-title-nohover">{{ object.title }}</h2>
+                            <p class="post-body">{{ object.body }}</p>
+                            {% if post.price %}
+                                <span class="price-bottom">{{ object.price }} т.г.</span>
+                            {% endif %}
+                        </div>
+                        <div class="justify-content-end">
+                            <a id="number" href="tel:{{object.phone_number}}">{{object.phone_number}}</a><br>
+                            <span class="post-author text-muted me-2">{{post.date_created|date:"d F"}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-end">
+                    {% if post.price %}
+                        <span class="price-right">{{ object.price }} т.г.</span>
+                    {% endif %}
+                    <div style="float:bottom">
+                        {% if object.author == user %}
+                        <div>
+                            <a class="btn btn-secondary btn-sm mt-1 post-settings" href="{% url 'post-update' object.id %}">Изменить</a>
+                        </div>
+                            <a class="btn btn-danger btn-sm mt-1 post-settings" href="{% url 'post-delete' object.id %}">Удалить </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+
+
+{% endblock %}

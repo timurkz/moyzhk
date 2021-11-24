@@ -1,0 +1,49 @@
+{% extends "audan/layout.html" %}
+
+{% block body %}
+
+<div class="container" >
+    <legend class="mt-1 mb-3 border-bottom">
+        <small>
+            <a class="text-muted hover-underline-animation" href="{% url 'building' %}?zhk={{post.zhk.name}}">Объявления в ЖК {{post.zhk.name}}</a>
+        </small>
+    </legend>
+
+    <div class="posts">
+        <article class="content-section">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                    <img class="post-img" src="{{ post.image.url }}">
+                    <div class="d-flex flex-column">
+                        <div class="post-content">
+                            <h2 class="post-title-nohover">{{ object.title }}</h2>
+                            <p class="post-body">{{ object.body }}</p>
+                            {% if post.price %}
+                                <span class="price-bottom">{{ object.price }} т.г.</span>
+                            {% endif %}
+                        </div>
+                        <div class="justify-content-end">
+                            <span class="post-author text-muted me-2">{{post.date_created|date:"d F"}}</span>
+                            <span id="show" class="button btn-primary btn-sm">Показать тел</span>
+                            <span><a id="number" style="display:none" href="tel:{{object.phone_number}}">{{object.phone_number}}</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-end">
+                    {% if post.price %}
+                        <span class="price-right">{{ object.price }} т.г.</span>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+<script>
+    document.getElementById("show").onclick = () => {
+        document.getElementById("show").style.display="none";
+        document.getElementById("number").style.display="inline";
+    }
+</script>
+
+
+{% endblock %}

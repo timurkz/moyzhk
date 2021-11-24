@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>Мой ЖК</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'audan/main.css' %}">
+    </head>
+    <body>
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+        <nav class="navbar navbar-light top_nav">
+            <form class="container-fluid justify-content-between">
+                <div>
+                    <a class="btn me-3 hover-underline-animation display-5" href="{% url 'index' %}">ГЛАВНАЯ</a>
+                </div>
+                <div>
+                    {% if user.is_authenticated %}
+                        <a class="btn me-3 hover-underline-animation" type="button" href="{% url 'profile'%}"> Кабинет</a>
+                        <a class="btn btn-outline-dark" href="{% url 'post-create'%}">Подать Объявление</a>
+                    {% else %}
+                        <a class="btn me-3 hover-underline-animation" href="{% url 'profile' %}">Кабинет</a>
+                        <a class="btn btn-outline-dark"  href="{% url 'post-create' %}">Подать Объявление</a>
+                    {% endif %}
+                </div>
+            </form>
+        </nav>
+        {% block body %}
+        {% endblock %}
+
+        <nav class="bottom_nav">
+            <a href="{% url 'index' %}" class="nav__link nav__link">
+                <i class="material-icons nav__icon">search</i>
+                <span class="nav__text">Поиск ЖК</span>
+            </a>
+            <a href="{% url 'post-create' %}" class="nav__link nav__link--active">
+                <i class="material-icons nav__icon">add_circle</i>
+                <span class="nav__text">Подать</span>
+            </a>
+            <a href="{% url 'profile' %}" class="nav__link">
+            <i class="material-icons nav__icon">account_circle</i>
+                <span class="nav__text">Кабинет</span>
+            </a>
+        </nav>
+    </body>
+</html>

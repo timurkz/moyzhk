@@ -1,0 +1,17 @@
+{% extends "audan/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<div class="container mt-5  col-sm-7">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4 display-6">Удалить Объявление</legend>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-danger" type="submit">Да</button>
+            <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

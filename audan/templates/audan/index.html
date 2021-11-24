@@ -1,0 +1,63 @@
+{% extends "audan/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+<body style="background-color: white;">
+<!-- <div class="bg-image" style="background-image: url('/static/audan/media/photo.jpeg');
+             height: 100vh">  -->
+    <div class="container mt-5 pt-5  col-sm-7 col-md-7 col-lg-5">
+        <span>
+            <p class="mt-5 mb-4 text-center text-muted display-4">Поиск Объявлений в Вашем Доме</p>
+            <div id="autocomplete" class=" autocomplete" >
+                <input autofocus id="input" class="autocomplete-input" placeholder="Выберите ваш ЖК"/>
+                <ul class="autocomplete-result-list"></ul>
+            </div>
+        
+            <div class=" button-wrapper pt-4" style="display:flex; align-items:center; justify-content: center;"; >
+                <button type="button" style="margin-right: 10px" class="btn btn_search btn-sm" id="search">Поиск</button>
+                <button type="button" style="margin-right: 10px" class="btn btn_search btn-sm" id="random_search">Мне повезет</button>
+            </div>
+        </span>
+    </div>
+</div>
+
+
+  
+
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+
+
+    <script>
+        new Autocomplete('#autocomplete', {
+
+            search: input => {
+                const url = `/search/?zhk=${(input)}`
+                return new Promise(resolve => {
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            resolve(data.data)
+                        })
+                })
+            },
+            onSubmit: result => {
+                location.href = (`/buildings/?zhk=${(result)}`)
+            }
+        })
+    </script>
+    <script>
+            document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("search").onclick = () => {
+                res = document.getElementById("input").value.toLowerCase();
+                console.log(res)
+                if (res) {
+                    location.href = (`/buildings/?zhk=${(res)}`)
+                }
+            }
+            document.getElementById("random_search").onclick = () => {
+                location.href = (`/buildings/?zhk=Seoul`)
+            }
+        })
+    </script>
+    {% endblock %}
