@@ -89,4 +89,4 @@ def building(request):
             })
 
         else:
-            return HttpResponse("<p>Упс</p>")
+            return HttpResponse("<h1>Мы к Вам идем :)</h1>")
