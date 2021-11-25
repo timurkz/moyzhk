@@ -13,7 +13,7 @@ class City(models.Model):
         return self.name
 
 class Building(models.Model):
-    district = models.CharField(max_length=120)
+    #district = models.CharField(max_length=120)
     name = models.CharField(max_length=70)
     city = models.ForeignKey(City, on_delete=models.PROTECT, related_name="buildings")
     def __str__(self):
