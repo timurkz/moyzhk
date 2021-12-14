@@ -71,7 +71,7 @@ def search_building(request):
     payload = []
 
     if building:
-        list_buildings = Building.objects.filter(name__icontains=building)
+        list_buildings = Building.objects.filter(name__istartswith=building)
 
         for building in list_buildings:
             payload.append(building.name)
