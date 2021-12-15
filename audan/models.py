@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+from django.conf import settings
 from django.utils import timezone
 from PIL import Image
 from django.urls import reverse
@@ -20,12 +22,12 @@ class Building(models.Model):
         return self.name
 
 class Post(models.Model):
+    User = settings.AUTH_USER_MODEL
     title = models.CharField(max_length=30, verbose_name= ('Краткое описание'))
     body = models.TextField(null=True, blank=True, max_length=100, verbose_name= ('Полное описание'))
     date_created = models.DateTimeField(default=timezone.now)
     date_modified = models.DateTimeField(auto_now=True) 
     price = models.IntegerField(null=True, blank=True, verbose_name= ('Цена'))
-    # phone_number = models.IntegerField(verbose_name= ('Номер телефона'))
     phone_number = PhoneNumberField(verbose_name= ('Номер телефона'))
     image = models.ImageField(default='default.jpg', upload_to='post_pics', verbose_name= ('Фото'))
 

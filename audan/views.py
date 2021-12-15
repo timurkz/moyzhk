@@ -71,7 +71,7 @@ def search_building(request):
     payload = []
 
     if building:
-        list_buildings = Building.objects.filter(name__istartswith=building)
+        list_buildings = Building.objects.filter(name__icontains=building)
 
         for building in list_buildings:
             payload.append(building.name)
@@ -89,4 +89,4 @@ def building(request):
             })
 
         else:
-            return HttpResponse("<h1>Мы к Вам идем :)</h1>")
+            return HttpResponse("<legend>Мы к Вам скоро придем :)</legend>")
