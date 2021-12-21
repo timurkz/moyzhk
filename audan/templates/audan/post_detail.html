@@ -1,49 +1,79 @@
 {% extends "audan/layout.html" %}
 
 {% block body %}
-
-<div class="container" >
+<div class="container">
     <legend class="mt-1 mb-3 border-bottom">
         <small>
-            <a class="text-muted hover-underline-animation" href="{% url 'building' %}?zhk={{post.zhk.name}}">Объявления в ЖК {{post.zhk.name}}</a>
+            <a class="hover-underline-animation" style="color:black" href="{% url 'building' %}?zhk={{post.zhk.name}}">ЖК {{post.zhk.name}}</a>
         </small>
     </legend>
-
-    <div class="posts">
-        <article class="content-section">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex">
-                    <img class="post-img" src="{{ post.image.url }}">
-                    <div class="d-flex flex-column">
-                        <div class="post-content">
-                            <h2 class="post-title-nohover">{{ object.title }}</h2>
-                            <p class="post-body">{{ object.body }}</p>
-                            {% if post.price %}
-                                <span class="price-bottom">{{ object.price }} т.г.</span>
-                            {% endif %}
-                        </div>
-                        <div class="justify-content-end">
-                            <span class="post-author text-muted me-2">{{post.date_created|date:"d F"}}</span>
-                            <span id="show" class="button btn-primary btn-sm">Показать тел</span>
-                            <span><a id="number" style="display:none" href="tel:{{object.phone_number}}">{{object.phone_number}}</a></span>
-                        </div>
+    <div class="row">
+        <div class="posts col-md-6">
+            <article class="content-section" style="">
+	    {% if post.image2 %}
+              <div id="carouselHeader" class="carousel slide">
+                <div class="carousel-inner">
+                    {% if post.image1 %}
+                    <div class="carousel-item active resize-image">
+                      <img class="post-image"  src="{{ post.image1.url }}" class="d-block w-100" alt="">
                     </div>
-                </div>
-                <div class="justify-content-end">
-                    {% if post.price %}
-                        <span class="price-right">{{ object.price }} т.г.</span>
+		    {% else %}
+		      <div class="carousel-item active resize-image">
+                      <img class="post-image"  src="{{ post.default_image.url }}" class="d-block w-100" alt="">
+                    </div>
                     {% endif %}
+                  {% if post.image2 %}
+                  <div class="carousel-item resize-image">
+                      <img class="post-image" src="{{ post.image2.url }}" class="d-block w-100" alt="">
+                  </div>
+                  {% endif %}
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselHeader" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselHeader" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+	    {% else %}
+		<div class="resize-image">
+			{% if post.image1 %}
+	    			<img class="post-image" src="{{ post.image1.url }}" alt="">
+			{% else %}
+				<img class="post-image" src="{{ post.default_image.url }}" alt="">
+			{% endif %}
+		</div>
+	    {% endif  %}
+	    </article>
+        </div>
+    <div class="posts col-md-4">
+        <article class="content-section">
+            <h2 class="post-title-nohover">{{ object.title }}</h2>
+            {% if post.price %}
+                <span class="price">{{ object.price }} т.г.</span>
+            {% endif %}
+            <p class="post-body-detail" style="word-wrap: break-word;">{{ object.body }}</p>
+            <div class="justify-content-end">
+                <span class="post-author text-muted me-2">{{post.date_created|date:"d F"}}</span>
+                <span id="show" class="button btn-primary btn-sm">Показать тел</span>
+                <span><a id="number" style="display:none" href="tel:{{object.phone_number}}">{{object.phone_number}}</a></span>
             </div>
         </article>
-    </div>
 </div>
 <script>
-    document.getElementById("show").onclick = () => {
-        document.getElementById("show").style.display="none";
-        document.getElementById("number").style.display="inline";
-    }
+document.getElementById("show").onclick = () => {
+  document.getElementById("show").style.display="none";
+  document.getElementById("number").style.display="inline";
+  };
+$('.carousel').carousel({
+  interval: false,
+});
 </script>
-
-
 {% endblock %}
+
+
+
+
+

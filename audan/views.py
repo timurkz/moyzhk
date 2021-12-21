@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django import forms
 from .models import City, Building, Post
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -34,17 +35,33 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['zhk','title','body','price','phone_number','image']
+    fields = ['zhk','title','body','price','phone_number','image1', 'image2']
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+
+        form = super(PostCreateView, self).get_form(form_class)
+        form.fields['phone_number'].widget = forms.TextInput(attrs={'placeholder': '+7xxx'})
+        return form
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['zhk','title','body','price','phone_number','image']
+    fields = ['zhk','title','body','price','phone_number','image1', 'image2']
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+
+        form = super(PostUpdateView, self).get_form(form_class)
+        form.fields['phone_number'].widget = forms.TextInput(attrs={'placeholder': '+7xxx'})
+        return form
 
     def test_func(self):
         post = self.get_object()

@@ -4,7 +4,7 @@
 {% block body %}
 <div class="container">
     <legend class="mt-1 mb-3 border-bottom">
-        <small class="text-muted">Объявления в ЖК {{building.name}}</small>
+        <small class="text-muted">ЖК {{building.name}}</small>
     </legend>
 
     <div class="posts">
@@ -13,13 +13,16 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
                         <a class="post" href="{% url 'post-detail' post.id %}">
-                            <img class="post-img" src="{{ post.image.url }}">
+				{% if post.image1 %}
+					<img class="post-img" src="{{ post.image1.url }}">
+				{% else %}
+					<img class="post-img" src="{{ post.default_image.url }}">
+				{% endif %}
                         </a>
                         <a class="post" href="{% url 'post-detail' post.id %}">
                             <div class="d-flex flex-column">
                                 <div class="post-content">
                                     <h1 class="post-title"  href="{% url 'post-detail' post.id %}">{{ post.title }}</h1>
-                                    <span class="post-body">{{ post.body }}</span>
                                     {% if post.price %}
                                         <span class="price-bottom">{{ post.price }} т.г.</span>
                                     {% endif %}
@@ -44,3 +47,4 @@
 
 
 {% endblock %}
+

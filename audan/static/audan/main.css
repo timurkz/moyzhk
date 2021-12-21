@@ -36,13 +36,20 @@ legend small {
   font-size: 0.9rem;
   font-weight: 200;
 }
-
+.post-body-detail {
+  font-size: 0.9rem;
+  font-weight: 200;
+}
 .posts .price-right {
   font-size: 1.3rem;
   font-weight: 500;
 }
 
 .posts .price-bottom {
+  font-size: 1.3rem;
+  font-weight:500;
+}
+.posts .price {
   font-size: 1.3rem;
   font-weight:500;
 }
@@ -132,7 +139,6 @@ h1.article-title:hover {
 }
 
 @media (max-width: 768px) {
-  .post-body,
   .price-right,
   .top_nav
   {
