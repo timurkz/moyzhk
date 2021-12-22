@@ -92,9 +92,9 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        messages.success(request, ('Личный кабинет создан. Вы можете войти'))
-        return redirect('login')
+        messages.success(request, ('Личный кабинет создан'))
+        return redirect('index')
     else:
-        messages.warning(request, ('Ссылка для подтверждения регистрации истекла или не верна'))
+        messages.warning(request, ('Ссылка для подтверждения регистрации истекла'))
         return redirect('register')
 

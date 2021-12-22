@@ -24,7 +24,7 @@
                                 <div class="post-content">
                                     <h1 class="post-title"  href="{% url 'post-detail' post.id %}">{{ post.title }}</h1>
                                     {% if post.price %}
-                                        <span class="price-bottom">{{ post.price }} т.г.</span>
+                                        <span class="price-bottom">{{ post.price }} тг</span>
                                     {% endif %}
                                 </div>
                                 <div class="justify-content-end">
@@ -35,7 +35,7 @@
                     </div>
                     <div class="justify-content-end">
                         {% if post.price %}
-                            <span class="price-right">{{ post.price }} т.г.</span>
+			<span class="price-right">{{ post.price }}<small> тг<small></span>
                         {% endif %}
                     </div>
                 </div>

@@ -14,13 +14,8 @@
         </div>
     </form>
     <div class="border-top mt-3 pt-3">
-        <small class="text-muted">
-             Забыли пароль? <a style="text-decoration: none" class="ms-2" href="{% url 'password_reset' %}">Сбросить пароль</a>
-        </small>
-        <br>
-	<small class="text-muted">
-             Нет личного кабинета? <a style="text-decoration: none" class="ms-2" href="{% url 'register' %}">Пройдите регистрацию</a>
-        </small>
+	    <p><a style="text-decoration: none" class="ms-2" href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+	    <p><a style="text-decoration: none" class="ms-2" href="{% url 'register' %}">Нет личного кабинета?</a></p>
     </div>
 </div>
 {% endblock %}

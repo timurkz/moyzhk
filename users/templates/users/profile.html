@@ -23,15 +23,18 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
                         <a class="post" href="{% url 'profile-post-detail' post.id %}">
-                            <img class="post-img" src="{{ post.image.url }}">
-                        </a>    
+                            {% if post.image1 %}
+                                <img class="post-img" src="{{ post.image1.url }}" alt="">
+                            {% else %}
+                                <img class="post-img" src="{{ post.default_image.url }}" alt="">
+                       	    {% endif %}
+			</a>    
                         <a class="post" href="{% url 'profile-post-detail' post.id %}">
                             <div class="d-flex flex-column">
                                 <div class="post-content">
                                     <h1 class="post-title">{{ post.title }}</h2>
-                                    <span class="post-body">{{ post.body }}</span>
                                     {% if post.price %}
-                                        <span class="price-bottom">{{ post.price }} т.г.</span>
+                                        <span class="price-bottom">{{ post.price }} тг</span>
                                     {% endif %}
                                 </div>
                                 <div class="justify-content-end">
@@ -40,11 +43,13 @@
                             </div>
                         </a>
                     </div>
-                    <div class="justify-content-end">
+                    <div class="justify-content-end"">
+                        <div>
                         {% if post.price %}
-                            <span class="price-right">{{ post.price }} т.г.</span>
+			<span style="float:right" class="price-right">{{ post.price }}<small> тг</small></span>
                         {% endif %}
-                        <div style="float:bottom">
+                        </div>
+                        <div style="float:right">
                             {% if post.author == user %}
                             <div>
                                 <a class="btn btn-secondary btn-sm mt-1 post-settings" href="{% url 'post-update' post.id %}">Изменить</a>

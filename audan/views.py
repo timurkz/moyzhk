@@ -28,7 +28,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'audan/building.html'
     context_object_name = 'posts'
-    ordering = ['-date_created']
+    #ordering = ['-date_created']
 
 class PostDetailView(DetailView):
     model = Post

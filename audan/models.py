@@ -19,6 +19,9 @@ class Building(models.Model):
     #district = models.CharField(max_length=120)
     name = models.CharField(max_length=70)
     city = models.ForeignKey(City, on_delete=models.PROTECT, related_name="buildings")
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
@@ -36,6 +39,10 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     zhk = models.ForeignKey(Building, on_delete=models.PROTECT, related_name="posts", verbose_name= ('Жилой Комплекс'))
+    
+    class Meta:
+        ordering = ['-date_created']
+
     def __str__(self):
         return self.title
 
@@ -57,7 +64,7 @@ class Post(models.Model):
                         elif exif[orientation] == 8:
                             img = img.rotate(90, expand=True)
 
-            img.thumbnail((600,600), Image.ANTIALIAS)
+            img.thumbnail((600,600))
             output = BytesIO()
             img = img.convert('RGB')
             img.save(output, format='JPEG', quality=95)
@@ -81,7 +88,7 @@ class Post(models.Model):
                         elif exif[orientation] == 8:
                             img = img.rotate(90, expand=True)
 
-            img.thumbnail((600,600), Image.ANTIALIAS)
+            img.thumbnail((600,600))
             output = BytesIO()
             img = img.convert('RGB')
             img.save(output, format='JPEG', quality=95)
