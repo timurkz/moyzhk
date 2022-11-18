@@ -33,8 +33,9 @@ class Post(models.Model):
     date_modified = models.DateTimeField(auto_now=True) 
     price = models.IntegerField(null=True, blank=True, verbose_name= ('Цена в тенге (Не обязательно)'))
     phone_number = PhoneNumberField(verbose_name= ('Номер телефона'))
-    image1 = models.ImageField(null=True, blank=True, upload_to='post_pics', verbose_name= ('Основное фото'))
-    image2 = models.ImageField(null=True, blank=True, upload_to='post_pics', verbose_name=('Дополнительное фото'))
+    image1 = models.ImageField(null=True, blank=True, verbose_name= ('Основное фото'))
+    image2 = models.ImageField(null=True, blank=True, verbose_name=('Дополнительное фото 1'))
+    image3 = models.ImageField(null=True, blank=True, verbose_name=('Дополнительное фото 2'))
     default_image = models.ImageField(default='default.jpg')
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
@@ -97,5 +98,31 @@ class Post(models.Model):
 
         super().save(*args, **kwargs)
     
+        if self.image3:
+            img = Image.open(BytesIO(self.image3.read()))
+            if hasattr(img, '_getexif'):
+                exif = img._getexif()
+                if exif:
+                    for tag, label in ExifTags.TAGS.items():
+                        if label == 'Orientation':
+                            orientation = tag
+                            break
+                    if orientation in exif:
+                        if exif[orientation] == 3:
+                            img = img.rotate(180, expand=True)
+                        elif exif[orientation] == 6:
+                            img = img.rotate(270, expand=True)
+                        elif exif[orientation] == 8:
+                            img = img.rotate(90, expand=True)
+
+            img.thumbnail((600,600))
+            output = BytesIO()
+            img = img.convert('RGB')
+            img.save(output, format='JPEG', quality=95)
+            output.seek(0)
+            self.image3 = File(output, self.image3.name)
+
+        super().save(*args, **kwargs) 
+
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})

@@ -8,6 +8,9 @@
     </legend>
 
     <div class="posts">
+	{% if not posts %}
+	<small class="text-muted">В вашем ЖК нет активных объявлений</small>
+	{% endif %}
         {% for post in posts %}  
             <article class="content-section">
                 <div class="d-flex justify-content-between">

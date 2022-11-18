@@ -35,7 +35,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['zhk','title','body','price','phone_number','image1', 'image2']
+    fields = ['zhk','title','body','price','phone_number','image1', 'image2','image3']
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
@@ -50,7 +50,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['zhk','title','body','price','phone_number','image1', 'image2']
+    fields = ['zhk','title','body','price','phone_number','image1', 'image2','image3']
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -106,4 +106,4 @@ def building(request):
             })
 
         else:
-            return HttpResponse("<legend>Мы к Вам скоро придем :)</legend>")
+            return HttpResponse("<h1>Мы к Вам скоро придем наверное:)</h1>")

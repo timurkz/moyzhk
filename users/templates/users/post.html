@@ -10,7 +10,7 @@
     <div class="row">
         <div class="posts col-md-6">
             <article class="content-section" style="">
-	    {% if post.image2 %}
+	    {% if post.image2 or post.image3 %}
               <div id="carouselHeader" class="carousel slide">
                 <div class="carousel-inner">
                     {% if post.image1 %}
@@ -25,6 +25,11 @@
                   {% if post.image2 %}
                   <div class="carousel-item resize-image">
                       <img class="post-image" src="{{ post.image2.url }}" class="d-block w-100" alt="">
+                  </div>
+                  {% endif %}
+		  {% if post.image3 %}
+                  <div class="carousel-item resize-image">
+                      <img class="post-image" src="{{ post.image3.url }}" class="d-block w-100" alt="">
                   </div>
                   {% endif %}
                 </div>
